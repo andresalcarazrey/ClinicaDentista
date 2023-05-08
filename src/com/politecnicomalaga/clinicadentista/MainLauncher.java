@@ -2,6 +2,7 @@ package com.politecnicomalaga.clinicadentista;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import com.google.gson.Gson;
 
 public class MainLauncher {
 
@@ -493,6 +494,14 @@ public class MainLauncher {
 	private static void saveClinica() {
 		if (ControladorFicheros.writeText("clinica.csv", miClinica.toCSV())) {
 			System.out.println("Proceso de volcado a disco exitoso");
+		} else {
+			System.out.println("Error al escribir en disco. ¿Tiene espacio en el disco?");
+		}
+		
+		String jsonClinica = new Gson().toJson(miClinica);
+		
+		if (ControladorFicheros.writeText("clinica.json", jsonClinica)) {
+			System.out.println("Proceso de volcado json a disco exitoso");
 		} else {
 			System.out.println("Error al escribir en disco. ¿Tiene espacio en el disco?");
 		}
